@@ -32,7 +32,7 @@ class CheckMaker
      */
     public function addExpiration()
     {
-        $this->attributesMaker->makeExpiration( $this->subscription->expires_on );
+        $this->attributesMaker->makeExpiration( $this->subscription->expires_on->format('d M Y H:i') );
 
         return $this;
     }
