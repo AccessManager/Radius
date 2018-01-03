@@ -18,7 +18,8 @@ class CreateRadacctTable extends Migration
             $table->string('acctsessionid', 64);
             $table->string('acctuniqueid', 32);
             $table->string('username', 64);
-            $table->string('groupname', 64);
+            $table->string('groupname', 64)
+                ->nullable();
             $table->string('realm', 64)
                 ->nullable();
             $table->string('nasipaddress', 15);
