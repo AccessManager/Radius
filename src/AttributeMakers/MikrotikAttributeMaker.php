@@ -3,6 +3,7 @@
 namespace AccessManager\Radius\AttributeMakers;
 
 use AccessManager\Constants\Data;
+use AccessManager\Radius\Helpers\Radius;
 
 class MikrotikAttributeMaker implements AttributeMakerInterface
 {
@@ -38,7 +39,7 @@ class MikrotikAttributeMaker implements AttributeMakerInterface
     public function makeBandwidthPolicy($policy)
     {
         $this->_addReply([
-            'Mikrotik-Rate-Limit'       =>      $policy,
+            'Mikrotik-Rate-Limit'       =>      $this->_mikrotikRateLimit($policy->toArray()),
         ]);
 
         return $this;
@@ -162,5 +163,18 @@ class MikrotikAttributeMaker implements AttributeMakerInterface
                 'value'         =>      $value
             ];
         }
+    }
+
+    private function _mikrotikRateLimit( array $v, $prefix = NULL)
+    {
+        return      "{$v[$prefix.'max_up']}{$v[$prefix.'max_up_unit'][0]}/".
+                    "{$v[$prefix.'max_down']}{$v[$prefix.'max_down_unit'][0]} ".
+                    "{$v[$prefix.'max_up']}{$v[$prefix.'max_up_unit'][0]}/".
+                    "{$v[$prefix.'max_down']}{$v[$prefix.'max_down_unit'][0]} ".
+                    "{$v[$prefix.'max_up']}{$v[$prefix.'max_up_unit'][0]}/".
+                    "{$v[$prefix.'max_down']}{$v[$prefix.'max_down_unit'][0]} ".
+                    "1/1 1 ".
+                    "{$v[$prefix.'min_up']}{$v[$prefix.'min_up_unit'][0]}/".
+                    "{$v[$prefix.'min_down']}{$v[$prefix.'min_down_unit'][0]}";
     }
 }
