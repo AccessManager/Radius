@@ -22,7 +22,7 @@ class Accountant
      */
     public function isCountable()
     {
-        return $this->subscription->isLimited() && $this->subscription->limitExhausted();
+        return ! $this->isNotCountable();
     }
 
     /**
@@ -30,7 +30,7 @@ class Accountant
      */
     public function isNotCountable()
     {
-        return ! $this->isCountable();
+        return $this->subscription->isLimited() && $this->subscription->limitExhausted();
     }
 
     /**
