@@ -1,6 +1,6 @@
 <?php
 
-namespace AM3\Radius\Accounting;
+namespace AccessManager\Radius\Accounting;
 
 
 use AccessManager\Constants\Data;

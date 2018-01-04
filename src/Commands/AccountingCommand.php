@@ -6,9 +6,9 @@ namespace AccessManager\Radius\Commands;
 use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
 use AccessManager\Radius\AccountSubscriptionWrapper;
 use AccessManager\Radius\Helpers\Radius;
-use AM3\Radius\Accounting\Accountant;
-use AM3\Radius\Accounting\CoA;
-use AM3\Radius\Accounting\InterimUpdate;
+use AccessManager\Radius\Accounting\Accountant;
+use AccessManager\Radius\Accounting\CoA;
+use AccessManager\Radius\Accounting\InterimUpdate;
 use Illuminate\Console\Command;
 
 class AccountingCommand extends Command
