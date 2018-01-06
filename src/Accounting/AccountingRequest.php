@@ -53,7 +53,7 @@ class AccountingRequest
     {
         return $this->interimUpdate->acctSessionTime;
     }
-    
+
     private function _fetchLastUpdate()
     {
         $this->lastUpdate = \DB::table('radacct')
