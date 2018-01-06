@@ -58,9 +58,9 @@ class AccountingRequest
     {
         $this->lastUpdate = \DB::table('radacct')
             ->where([
-                'username'              => $this->interimUpdate->userName,
-                'acctuniqueid'          =>  $this->interimUpdate->acctUniqueId,
-                'acctuniquesessionid'   =>  $this->interimUpdate->acctUniqueSessionId,
+                'username'       => $this->interimUpdate->userName,
+                'acctsessionid'  =>  $this->interimUpdate->acctSessionId,
+                'acctuniqueid'   =>  $this->interimUpdate->acctUniqueSessionId,
             ])
             ->first();
     }
