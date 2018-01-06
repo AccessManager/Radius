@@ -102,6 +102,11 @@ class Accountant
         }
         $originalSubscription = $this->subscription->getOriginal();
         $originalSubscription->services()->update($balance);
+
+        if( $this->quotaExceeded() )
+        {
+            $originalSubscription->services()->update(['exhausted'=>1]);
+        }
     }
 
     /**
