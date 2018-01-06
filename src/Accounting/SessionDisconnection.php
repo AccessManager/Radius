@@ -10,7 +10,7 @@ class SessionDisconnection
 
     public function invoke()
     {
-        $exec = "echo \" User-Name={$this->session->userName}, Framed-IP-Address={$this->session->framedipaddress} \" ".
+        $exec = "echo \" User-Name={$this->session->username}, Framed-IP-Address={$this->session->framedipaddress} \" ".
             "| radclient {$this->session->nasipaddress}:3799 disconnect {$this->session->secret}";
         (new Process($exec) )->start();
     }

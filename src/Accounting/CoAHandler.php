@@ -27,7 +27,7 @@ class CoAHandler
 
         foreach( $this->activeSessions as $session )
         {
-            if( $session->type == 'PPP' )
+            if( $session->framedprotocol == 'PPP' )
             {
                 (new SessionDisconnection($session) )->invoke();
             } else {
@@ -36,14 +36,17 @@ class CoAHandler
         }
     }
 
+    /**
+     * Fetch active sessions for given user.
+     */
     private function _fetchActiveSessions()
     {
         $this->activeSessions = \DB::table( 'radacct as a' )
                                     ->join( 'routers AS r', 'r.nasname', '=', 'a.nasipaddress' )
                                     ->where( 'a.username', $this->interimUpdate->userName )
                                     ->where('a.acctstoptime', NULL)
-                                    ->select( 'a.nasipaddress', 'r.secret', 'a.servicetype',
-                                        'a.framedipaddress', 'a.acctsessionid' )
+                                    ->select( 'a.nasipaddress', 'r.secret', 'a.framedprotocol',
+                                        'a.framedipaddress', 'a.acctsessionid', 'a.username' )
                                     ->get();
     }
 
