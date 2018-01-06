@@ -3,32 +3,17 @@
 namespace AccessManager\Radius\Accounting;
 
 
-use AccessManager\Radius\AccountSubscriptionWrapper;
-
 class CoA
 {
-    /**
-     * @var InterimUpdate
-     */
-    protected $interimUpdate;
-    /**
-     * @var AccountSubscriptionWrapper
-     */
-    protected $subscription;
+    protected $session;
 
     public function invoke()
     {
 
     }
 
-    /**
-     * CoA constructor.
-     * @param InterimUpdate $interimUpdate
-     * @param AccountSubscriptionWrapper $subscription
-     */
-    public function __construct( InterimUpdate $interimUpdate, AccountSubscriptionWrapper $subscription )
+    public function __construct( $session )
     {
-        $this->interimUpdate = $interimUpdate;
-        $this->subscription = $subscription;
+        $this->session = $session;
     }
 }
