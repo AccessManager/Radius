@@ -3,7 +3,6 @@
 namespace AccessManager\Radius\AttributeMakers;
 
 use AccessManager\Constants\Data;
-use AccessManager\Radius\Helpers\Radius;
 
 class MikrotikAttributeMaker implements AttributeMakerInterface
 {
@@ -12,8 +11,14 @@ class MikrotikAttributeMaker implements AttributeMakerInterface
      */
     protected $username;
 
+    /**
+     * @var array
+     */
     protected $checks;
 
+    /**
+     * @var array
+     */
     protected $replies;
 
     /**
