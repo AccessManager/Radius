@@ -30,9 +30,9 @@ class AccountingCommand extends Command
 
         $accountingAttributes = Radius::parseAccountingPacket($accountingPacket);
 
-        $interimUpdate = InterimUpdate::createFromAttributes($accountingAttributes);
+        Radius::checkAndIgnoreSessionStartUpdates($accountingAttributes);
 
-        if( $interimUpdate->isNewSession() ) exit(0);
+        $interimUpdate = InterimUpdate::createFromAttributes($accountingAttributes);
 
         $subscription = $accountSubscription->where( 'username', $interimUpdate->userName )->firstOrFail();
 

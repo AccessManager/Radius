@@ -27,6 +27,15 @@ class Radius
         return $result;
     }
 
+    public static function checkAndIgnoreSessionStartUpdates( array $accountingAttributes )
+    {
+        if(
+            $accountingAttributes['Acct-Status-Type'] == 'Accounting-On' ||
+            $accountingAttributes['Acct-Status-Type'] == 'Start'
+        )
+            exit(0);
+    }
+
     public static function disconnectSession( $session )
     {
         $exec = "echo \" User-Name={$session->uname}, Framed-IP-Address={$session->framedipaddress} \" ".
