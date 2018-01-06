@@ -5,6 +5,7 @@ namespace AccessManager\Radius\Commands;
 
 use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
 use AccessManager\Radius\Accounting\AccountingRequest;
+use AccessManager\Radius\Accounting\CoAHandler;
 use AccessManager\Radius\AccountSubscriptionWrapper;
 use AccessManager\Radius\Helpers\Radius;
 use AccessManager\Radius\Accounting\Accountant;
@@ -47,7 +48,7 @@ class AccountingCommand extends Command
 
         if( $accountant->CoARequired() )
         {
-            ( new CoA( $interimUpdate, new AccountSubscriptionWrapper($subscription) ) )->invoke();
+            ( new CoAHandler( $interimUpdate, new AccountSubscriptionWrapper($subscription) ) )->handle();
         }
     }
 
