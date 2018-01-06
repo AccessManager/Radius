@@ -15,7 +15,7 @@ class Accountant
     /**
      * @var InterimUpdate
      */
-    protected $interimUpdate;
+    protected $accountingRequest;
 
     /**
      * @return bool
@@ -54,7 +54,7 @@ class Accountant
      */
     public function newTimeBalance()
     {
-        return $this->subscription->timeBalance() - $this->interimUpdate->acctSessionTime;
+        return $this->subscription->timeBalance() - $this->accountingRequest->countableTime();
     }
 
     /**
@@ -62,7 +62,7 @@ class Accountant
      */
     public function newDataBalance()
     {
-        return $this->subscription->dataBalance() - $this->interimUpdate->acctSessionData;
+        return $this->subscription->dataBalance() - $this->accountingRequest->countableData();
     }
 
     /**
@@ -107,12 +107,12 @@ class Accountant
     /**
      * Accountant constructor.
      * @param AccountSubscriptionWrapper $subscription
-     * @param InterimUpdate $interimUpdate
+     * @param AccountingRequest $accountingRequest
      */
-    public function __construct( AccountSubscriptionWrapper $subscription, InterimUpdate $interimUpdate )
+    public function __construct( AccountSubscriptionWrapper $subscription, AccountingRequest $accountingRequest )
     {
         $this->subscription = $subscription;
-        $this->interimUpdate = $interimUpdate;
+        $this->accountingRequest = $accountingRequest;
     }
 
 }
