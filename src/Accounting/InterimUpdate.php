@@ -29,7 +29,7 @@ class InterimUpdate
         if( array_key_exists($name, $this->attributes) )
             return $this->attributes[$name];
 
-        throw new \Exception('Property Not Found.');
+        throw new \Exception("Property: {$name} Not Found.");
     }
 
     private function _constructAttributes( $attributes )
