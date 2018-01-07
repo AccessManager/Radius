@@ -34,11 +34,11 @@ class ReplyMaker
     /**
      * @return $this
      */
-    public function addTimeLimit()
+    public function addTimeLimit( $sessionTime = 0 )
     {
         if( $this->subscription->haveTimeLimit() && $this->subscription->aqNotAllowed() )
         {
-            $this->attributesMaker->makeTimeLimit($this->subscription->timeBalance());
+            $this->attributesMaker->makeTimeLimit($this->subscription->timeBalance() + $sessionTime);
         } else {
             $this->attributesMaker->makeTimeLimit(0);
         }
@@ -48,11 +48,11 @@ class ReplyMaker
     /**
      * @return $this
      */
-    public function addDataLimit()
+    public function addDataLimit( $sessionData = 0 )
     {
         if( $this->subscription->haveDataLimit() && $this->subscription->aqNotAllowed() )
         {
-            $this->attributesMaker->makeDataLimit($this->subscription->dataBalance());
+            $this->attributesMaker->makeDataLimit($this->subscription->dataBalance() + $sessionData );
         } else {
             $this->attributesMaker->makeDataLimit(0);
         }
