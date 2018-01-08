@@ -83,7 +83,7 @@ class Accountant
      */
     public function CoARequired()
     {
-        if( $this->subscription->isUnlimited() || $this->subscription->aqNotAllowed() )
+        if( $this->subscription->isUnlimited() )
             return false;
 
         return $this->quotaExceeded();
