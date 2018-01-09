@@ -48,6 +48,7 @@ class AccountingCommand extends Command
 
         if( $accountant->CoARequired() )
         {
+            $subscription = $accountSubscription->where( 'username', $interimUpdate->userName )->firstOrFail();
             ( new CoAHandler( $interimUpdate, new AccountSubscriptionWrapper($subscription) ) )->handle();
         }
     }
