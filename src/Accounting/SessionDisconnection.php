@@ -12,7 +12,7 @@ class SessionDisconnection
     {
         $exec = "echo \" User-Name={$this->session->username}, Framed-IP-Address={$this->session->framedipaddress} \" ".
             "| radclient {$this->session->nasipaddress}:3799 disconnect {$this->session->secret}";
-        (new Process($exec) )->start();
+        (new Process($exec) )->run();
     }
 
     public function __construct( $session )
