@@ -31,7 +31,7 @@ class CoAHandler
             {
                 (new SessionDisconnection($session) )->invoke();
             } else {
-                (new CoA( $session ) )->invoke();
+                (new CoA( $this->subscription, $session, new AccountingRequest($this->interimUpdate) ) )->invoke();
             }
         }
     }
