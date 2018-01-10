@@ -27,7 +27,7 @@ class CoAHandler
 
         foreach( $this->activeSessions as $session )
         {
-            if( $session->framedprotocol == 'PPP' )
+            if( $session->framedprotocol == 'PPP' && $this->subscription->aqNotAllowed() )
             {
                 (new SessionDisconnection($session) )->invoke();
             } else {
