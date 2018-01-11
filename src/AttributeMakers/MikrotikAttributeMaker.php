@@ -43,9 +43,12 @@ class MikrotikAttributeMaker implements AttributeMakerInterface
 
     public function makeBandwidthPolicy($policy)
     {
-        $this->_addReply([
-            'Mikrotik-Rate-Limit'       =>      $this->_mikrotikRateLimit($policy->toArray()),
-        ]);
+        if( $policy != null )
+        {
+            $this->_addReply([
+                'Mikrotik-Rate-Limit'       =>      $this->_mikrotikRateLimit($policy->toArray()),
+            ]);
+        }
 
         return $this;
     }
