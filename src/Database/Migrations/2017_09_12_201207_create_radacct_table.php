@@ -27,9 +27,13 @@ class CreateRadacctTable extends Migration
                 ->nullable();
             $table->string('nasporttype', 32)
                 ->nullable();
-            $table->dateTime('acctstarttime')
+            $table->integer('acctstarttime')
                 ->nullable();
-            $table->dateTime('acctstoptime')
+            $table->integer('acctstoptime')
+                ->nullable();
+            $table->integer('acctupdatetime')
+                ->nullable();
+            $table->integer('acctinterval')
                 ->nullable();
             $table->integer('acctsessiontime')
                 ->nullable();
