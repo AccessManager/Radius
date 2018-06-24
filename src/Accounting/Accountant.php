@@ -30,7 +30,9 @@ class Accountant
      */
     public function isNotCountable()
     {
-        return $this->subscription->isLimited() && $this->subscription->limitExhausted();
+//        dd($this->subscription->isLimited());
+        return ($this->subscription->isLimited() && $this->subscription->limitExhausted())
+            || $this->subscription->isUnlimited();
     }
 
     /**
@@ -100,6 +102,7 @@ class Accountant
         {
             $balance['data_balance'] = $this->newDataBalance();
         }
+
         $originalSubscription = $this->subscription->getOriginal();
         $originalSubscription->services()->update($balance);
 
