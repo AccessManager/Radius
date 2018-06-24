@@ -5,6 +5,12 @@ namespace AccessManager\Radius;
 
 use AccessManager\Radius\AttributeMakers\AttributeMakerInterface;
 
+/**
+ * This class creates array of applicable radius attributes for radreply table.
+ *
+ * Class ReplyMaker
+ * @package AccessManager\Radius
+ */
 class ReplyMaker
 {
     /**
@@ -18,6 +24,8 @@ class ReplyMaker
     protected $attributesMaker;
 
     /**
+     * Check and add bandwidth policy to the session as per the plan
+     *
      * @return $this
      */
     public function addBandwidthPolicy()
@@ -31,7 +39,11 @@ class ReplyMaker
         return $this;
     }
 
+
     /**
+     * Check and add time limit to the session as per the plan
+     *
+     * @param int $sessionTime
      * @return $this
      */
     public function addTimeLimit( $sessionTime = 0 )
@@ -46,6 +58,9 @@ class ReplyMaker
     }
 
     /**
+     * Check and add data limit to the session as per the plan
+     *
+     * @param int $sessionData
      * @return $this
      */
     public function addDataLimit( $sessionData = 0 )
@@ -70,21 +85,34 @@ class ReplyMaker
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function addIdleTimeout()
     {
         //TODO: Implement IdleTimeout.
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function addFramedIp()
     {
-        //TODO: implement framed IP.
+        if( $this->subscription->haveFramedIp() )
+        {
+            $this->attributesMaker->makeFramedIp( $this->subscription->getFramedIpAddress() );
+        }
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     public function addFramedRoute()
     {
-        //TODO: implement framed route.
+        if( $this->subscription->haveFramedRoute() )
+            $this->attributesMaker->makeFramedRoute($this->subscription->getFramedRoute());
         return $this;
     }
 

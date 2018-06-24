@@ -3,7 +3,8 @@
 namespace AccessManager\Radius;
 
 
-use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
+use AccessManager\AccountDetails\AccountSubscription\Interfaces\SubscriptionInterface;
+//use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
 
 class AccountSubscriptionWrapper
 {
@@ -62,6 +63,26 @@ class AccountSubscriptionWrapper
         return 0;
     }
 
+    public function haveFramedIp()
+    {
+        return $this->subscription->framedIp()->exists();
+    }
+
+    public function getFramedIpAddress()
+    {
+        return long2ip($this->subscription->framedIp->address);
+    }
+
+    public function haveFramedRoute()
+    {
+        return $this->subscription->framedRoute()->exists();
+    }
+
+    public function getFramedRoute()
+    {
+        return $this->subscription->framedRoute->cidr;
+    }
+
     public function getOriginal()
     {
         return $this->subscription;
@@ -72,7 +93,7 @@ class AccountSubscriptionWrapper
         return $this->subscription->$name;
     }
 
-    public function __construct( AccountSubscription $subscription )
+    public function __construct( SubscriptionInterface $subscription )
     {
         $this->subscription = $subscription;
     }

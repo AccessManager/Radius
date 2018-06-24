@@ -4,17 +4,20 @@ namespace AccessManager\Radius\Commands;
 
 
 use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
+//use AccessManager\Hotspot\Models\HotspotSubscription;
 use AccessManager\Radius\AccountSubscriptionWrapper;
 use AccessManager\Radius\AttributeMakers\MikrotikAttributeMaker;
 use AccessManager\Radius\Auth\Authenticator;
 use AccessManager\Radius\Auth\Authorizer;
-use Illuminate\Console\Command;
+use AccessManager\Radius\Helpers\Radius;
+
+//use Illuminate\Console\Command;
 
 /**
  * Class AuthCommand
  * @package AccessManager\Radius
  */
-class AuthCommand extends Command
+class AuthCommand extends RadiusBaseCommand
 {
     /**
      * @var string
@@ -29,11 +32,17 @@ class AuthCommand extends Command
     /**
      * @param AccountSubscription $accountSubscription
      */
-    public function handle( AccountSubscription $accountSubscription )
+    public function handle()
     {
         $username = $this->argument('username');
 
-        $subscription = $accountSubscription->where('username', $username)->firstOrFail();
+        try{
+            $subscription = $this->getSubscriptionFromUsername($username);
+        }
+        catch (\Exception $e)
+        {
+            Radius::reject("no such user: {$username}");
+        }
 
         $authenticator = new Authenticator( $subscription );
 
@@ -49,4 +58,7 @@ class AuthCommand extends Command
             ->makeReplies()
             ->updateRadius();
     }
+
+
+
 }

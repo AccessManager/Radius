@@ -3,7 +3,9 @@
 namespace AccessManager\Radius\Auth;
 
 
-use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
+//use AccessManager\AccountDetails\AccountSubscription\Interfaces\AccountSubscriptionInterface;
+use AccessManager\AccountDetails\AccountSubscription\Interfaces\SubscriptionInterface;
+//use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
 use AccessManager\Constants\Subscription;
 use AccessManager\Radius\Helpers\Radius;
 
@@ -16,15 +18,15 @@ use AccessManager\Radius\Helpers\Radius;
 class Authenticator
 {
     /**
-     * @var AccountSubscription
+     * @var SubscriptionInterface
      */
     protected $subscription;
 
     /**
      * Authenticator constructor.
-     * @param AccountSubscription $subscription
+     * @param SubscriptionInterface $subscription
      */
-    public function __construct( AccountSubscription $subscription )
+    public function __construct( SubscriptionInterface $subscription )
     {
         $this->subscription = $subscription;
     }

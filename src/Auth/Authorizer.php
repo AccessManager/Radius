@@ -48,6 +48,8 @@ class Authorizer
                         ->addDataLimit()
                         ->addTimeLimit()
                         ->addIdleTimeout()
+                        ->addFramedIp()
+                        ->addFramedRoute()
                         ->addInterimInterval();
 
         return $this;

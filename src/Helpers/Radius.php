@@ -16,7 +16,7 @@ class Radius
     {
         $output = preg_replace("/\s+[=]\s+/",'=', $accountingPacket);
         $output = preg_replace("/\s+/",' ',$output);
-        $output = explode(' ',$output);
+//        $output = explode(' ',$output);
         $result = [];
         foreach($output as $pair) {
             if(strpos($pair,'=') ){

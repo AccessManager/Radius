@@ -3,39 +3,41 @@
 namespace AccessManager\Radius\Commands;
 
 
-use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
+//use AccessManager\AccountDetails\AccountSubscription\Models\AccountSubscription;
 use AccessManager\Radius\Accounting\AccountingRequest;
 use AccessManager\Radius\Accounting\CoAHandler;
 use AccessManager\Radius\AccountSubscriptionWrapper;
 use AccessManager\Radius\Helpers\Radius;
 use AccessManager\Radius\Accounting\Accountant;
-use AccessManager\Radius\Accounting\CoA;
+//use AccessManager\Radius\Accounting\CoA;
 use AccessManager\Radius\Accounting\InterimUpdate;
-use Illuminate\Console\Command;
+//use Illuminate\Console\Command;
 
-class AccountingCommand extends Command
+class AccountingCommand extends RadiusBaseCommand
 {
     /**
      * @var string
      */
-    protected $signature = 'am:account {z : Freeradius accounting packet.}';
+    protected $signature = 'am:account {User-Name} {Acct-Session-Id} {Acct-Unique-Session-Id} {Acct-Input-Octets} {Acct-Output-Octets} {Acct-Input-Gigawords} {Acct-Output-Gigawords} {Acct-Session-Time} {Acct-Status-Type}';
 
     /**
      * @var string
      */
     protected $description = 'Handles accounting/interim update packets from NASes.';
 
-    public function handle( AccountSubscription $accountSubscription )
+    public function handle()
     {
-        $accountingPacket = $this->argument('z');
+        $accountingPacket = $this->arguments();
 
-        $accountingAttributes = Radius::parseAccountingPacket($accountingPacket);
+//        $accountingAttributes = Radius::parseAccountingPacket($accountingPacket);
 
-        Radius::checkAndIgnoreSessionStartUpdates($accountingAttributes);
+        Radius::checkAndIgnoreSessionStartUpdates($accountingPacket);
 
-        $interimUpdate = InterimUpdate::createFromAttributes($accountingAttributes);
+        $interimUpdate = InterimUpdate::createFromAttributes($accountingPacket);
 
-        $subscription = $accountSubscription->where( 'username', $interimUpdate->userName )->firstOrFail();
+//        $subscription = $accountSubscription->where( 'username', $interimUpdate->userName )->firstOrFail();
+
+        $subscription = $this->getSubscriptionFromUsername($interimUpdate->userName);
 
         $accountant = new Accountant(
             new AccountSubscriptionWrapper($subscription),
@@ -48,7 +50,9 @@ class AccountingCommand extends Command
 
         if( $accountant->CoARequired() )
         {
-            $subscription = $accountSubscription->where( 'username', $interimUpdate->userName )->firstOrFail();
+//            $subscription = $accountSubscription->where( 'username', $interimUpdate->userName )->firstOrFail();
+            $subscription = $this->getSubscriptionFromUsername($interimUpdate->userName);
+
             ( new CoAHandler( $interimUpdate, new AccountSubscriptionWrapper($subscription) ) )->handle();
         }
     }
